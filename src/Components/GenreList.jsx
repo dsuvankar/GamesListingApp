@@ -26,7 +26,8 @@ function GenreList({ genreId, selectedGenresName }) {
             selectedGenresName(item.name);
           }}
           className={`flex gap-2 items-center mb-2  cursor-pointer hover:bg-gray-300 p-2 group rounded-lg hover:dark:bg-gray-600 
-          ${activeIndex == index ? "bg-slate-300 dark:bg-gray-700 " : null} `}>
+          ${activeIndex == index ? "bg-slate-300 dark:bg-gray-700 " : null} `}
+          key={index}>
           <img
             src={item.image_background}
             className={`w-[50px] h-[50px] object-cover rounded-lg group-hover:scale-105 transition-all ease-out duration-300 ${

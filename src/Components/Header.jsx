@@ -2,14 +2,38 @@ import React, { useContext, useEffect, useState } from "react";
 import logo from "./../assets/Images/logo.png";
 import { HiOutlineSearch, HiMoon, HiSun } from "react-icons/hi";
 import { ThemeContext } from "../Context/ThemeContext";
+import GlobalApi from "../Services/GlobalApi";
+import { SearchResultsContext } from "../Context/SearchResultContext.jsx";
 
 function Header() {
   const [toggle, setToggle] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const { theme, setTheme } = useContext(ThemeContext);
+  const { setSearchResults } = useContext(SearchResultsContext);
 
   useEffect(() => {
     console.log("Theme", theme);
   }, []);
+
+  // useEffect(() => {
+  //   setSearchResults([]);
+  // }, [searchTerm]);
+
+  const handleSearch = async (event) => {
+    if (event.key === "Enter") {
+      try {
+        const response = await GlobalApi.searchGames(searchTerm);
+        setSearchResults(response.data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log(searchResults);
+  // }, [searchResults]);
 
   return (
     <div className="  flex items-center ">
@@ -21,6 +45,9 @@ function Header() {
           type="text"
           placeholder="Search Games"
           className="px-2 bg-transparent  outline-none"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleSearch}
         />
       </div>
       <div>

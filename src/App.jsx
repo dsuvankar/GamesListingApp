@@ -5,9 +5,9 @@ import "./App.css";
 import Home from "./Pages/Home";
 import Header from "./Components/Header";
 import { ThemeContext } from "./Context/ThemeContext";
+import { SearchResultsProvider } from "./Context/SearchResultContext.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
@@ -18,13 +18,15 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div
-        className={`${theme} ${
-          theme === "dark" ? "bg-[#121212]" : null
-        } min-h-[100vh]`}>
-        <Header />
-        <Home />
-      </div>
+      <SearchResultsProvider>
+        <div
+          className={`${theme} ${
+            theme === "dark" ? "bg-[#121212]" : null
+          } min-h-[100vh] min-w-full`}>
+          <Header />
+          <Home />
+        </div>
+      </SearchResultsProvider>
     </ThemeContext.Provider>
   );
 }
